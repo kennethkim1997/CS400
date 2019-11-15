@@ -1,50 +1,50 @@
 extends layout
 block content
   .container
-      h1
+    h1
+      p
+        | PS6: Mongo | CS400
+    br
+    br
+    .row
+      .col-md-6
+        form.form-inline(method="post", action="weather")
+          .form-group
+            input.form-control( name="city" type="text" placeholder="Enter City Name" required='required')
+          |
+          button.btn.btn-primary(type="submit") Get Weather Conditions
+      hr
+    .row
+      .col-md-12
         p
-         | PS4: External Data | CS400
-      br
-      br
-      .row
-        .col-md-6
-          form.form-inline(method="post", action="weather")
-            .form-group
-                input.form-control( name="city" type="text" placeholder="Enter City Name" required='required')
-            |
-            button.btn.btn-primary(type="submit") Get Weather Conditions
-        hr
-      .row
-        .col-md-12
-          p
-           br
-           strong Weather Conditions #{forecast}
-          table.table
-            thead
-                tr
-                  th Longitude / Latitude
+          br
+          strong Weather Conditions #{forecast}
+        table.table
+          thead
+            tr
+              th Longitude / Latitude
 
-                  th Pressure
+              th Pressure
 
-                  th Temperature
+              th Temperature
 
-                  th Humidity
+              th Humidity
 
-                  th Speed
-              tbody
-                if body
-                  tr
-                    td
-                      #{body.coord.lon} / #{body.coord.lat}
-                    td
-                      #{body.main.pressure}
-                    td
-                      #{body.main.temp}
-                    td
-                      #{body.main.humidity}
-                    td
-                      #{body.wind.speed}
-                else
-                  tr
-                    td(colspan="6")
-                      | Enter the city name and click Get Weather Conditions
+              th Speed
+          tbody
+            if body
+              tr
+                td
+                  #{body.coord.lon} / #{body.coord.lat}
+                td
+                  #{body.main.pressure}
+                td
+                  #{body.main.temp}
+                td
+                  #{body.main.humidity}
+                td
+                  #{body.wind.speed}
+            else
+              tr
+                td(colspan="6")
+                  | Enter the city
