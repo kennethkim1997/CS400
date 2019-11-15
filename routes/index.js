@@ -1,11 +1,11 @@
 /* Kenneth Kim (heykjk@bu.edu)
-   CS400 PS4: Single API
+   CS400 PS6: Mongo
  */
 const weatherConfig = require('../config/weather');
 
 // An instance of express.Router
-var express = require('express');
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
 
 let url = weatherConfig.URL;
 let appId = 'APPID='+ weatherConfig.APP_ID;
@@ -13,8 +13,7 @@ let appId = 'APPID='+ weatherConfig.APP_ID;
 let request = require('request');
 
 /* GET home page. */
-// Assign empty body and forecast variables to the template
-router.get('/ps4', function(req, res, next) {
+router.get('/', function(req, res, next) {
   res.render('index', {body: '', forecast: ''});
 });
 
@@ -32,8 +31,32 @@ router.post('/weather', function(req, res, next) {
     let country = (body.sys.country) ? body.sys.country : '' ;
     let forecast = "For "+city+", "+country;
 
-    res.render('index', {body : body, forecast: forecast});
+    let MongoClient = require('mongodb').MongoClient;
 
+    // Connect to the db
+    MongoClient.connect("mongodb://localhost:3000,weatherDb", function (err, db) {
+      if (err) throw err;
+      let dbo = db.db("weatherDb");
+      dbo.createCollection("cities", function(err, res) {
+        if (err) throw err;
+        console.log("Collection created!");
+        db.close();
+      });
+      let query = { body: body, forecast: forecast};
+      if (query in "cities") {
+        dbo.collection("cities").find(query).toArray(function(err, result) {
+          if (err) throw err;
+          console.log(result);
+          db.close();
+        });
+      }
+      else {
+        dbo.collection("cities").insertOne(query, function(err, res) {
+          res.render('index', {body: body, forecast: forecast});
+          db.close();
+        });
+      }
+      });
   });
 
 });
