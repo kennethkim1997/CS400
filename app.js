@@ -1,17 +1,20 @@
 /* Kenneth Kim (heykjk@bu.edu)
-   CS400 PS4: Single API
+   CS400 PS6: Mongo
  */
 
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+let createError = require('http-errors');
+let express = require('express');
+let path = require('path');
+let cookieParser = require('cookie-parser');
+let logger = require('morgan');
 
-var ps4 = require('./routes/index');
-var users = require('./routes/users');
+let ps6 = require('./routes/ps6');
+let users = require('./routes/users');
+let index = require('./routes/index');
 
-var app = express();
+const db = require('./db');
+
+let app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -24,8 +27,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Mount on the path /ps4
-app.use('/ps4', ps4);
+app.use('/ps6', ps6);
 app.use('/users', users);
+app.use('/', index);
 
 
 // catch 404 and forward to error handler
