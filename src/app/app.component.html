@@ -1,0 +1,23 @@
+
+
+<div style="text-align:center">
+  <h1>
+    Welcome to {{ title }}!
+  </h1>
+</div>
+
+<div>
+
+  <ul>
+
+    <li *ngFor="let city of cities">
+      <label (click)="displayCityDetail(city)">{{city.name}}</label>
+    </li>
+
+  </ul>
+
+</div>
+
+
+<app-form-field-with-validation [selectedCity]="selectedCity"></app-form-field-with-validation>
+

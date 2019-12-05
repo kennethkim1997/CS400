@@ -1,0 +1,5 @@
+<div *ngIf="selectedCity">
+  <h3>Details for {{selectedCity.city}}</h3>
+  <input type="text" [(ngModel)]="selectedCity.city" required minlength="1"><br/>
+
+</div>
